@@ -30,13 +30,15 @@ export const Homepage = () => {
 
   return (
     <div className='container'>
-      <MenuItem
-        title={'Visit Shop'}
-        imageUrl={
-          'https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1351&q=80'
-        }
-        size={'large'}
-      />
+      <div className='animate__animated animate__fadeInLeft'>
+        <MenuItem
+          title={'Visit Shop'}
+          imageUrl={
+            'https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1351&q=80'
+          }
+          size={'large'}
+        />
+      </div>
       <div className='category-menu'>
         {categories.map((category) => (
           <MenuItem

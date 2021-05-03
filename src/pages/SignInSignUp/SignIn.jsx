@@ -38,7 +38,7 @@ export const SignIn = ({ currentUser }) => {
 
   return (
     <div className='sign-in'>
-      <div className='form'>
+      <div className='form animate__animated animate__fadeInRight'>
         <h1>Sign in to your account</h1>
         <form onSubmit={handleSubmit}>
           <div className='form-item'>
@@ -71,7 +71,7 @@ export const SignIn = ({ currentUser }) => {
         </p>
       </div>
       <div
-        className='image'
+        className='image animate__animated animate__fadeInLeft'
         style={{
           backgroundImage:
             'url(https://images.unsplash.com/photo-1483985988355-763728e1935b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)',

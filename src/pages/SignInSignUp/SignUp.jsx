@@ -43,13 +43,13 @@ export const SignUp = () => {
   return (
     <div className='sign-in'>
       <div
-        className='image'
+        className='image animate__animated animate__fadeInRight'
         style={{
           backgroundImage:
             'url(https://images.unsplash.com/photo-1483181957632-8bda974cbc91?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)',
         }}
       ></div>
-      <div className='form'>
+      <div className='form animate__animated animate__fadeInLeft'>
         <h1>Register and start shopping</h1>
         <form onSubmit={handleSubmit}>
           <div className='form-item'>
