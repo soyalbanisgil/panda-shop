@@ -1,9 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import firebase, { auth } from '../../firebase/firebase.utils';
 import Logo from '../../assets/logo.png';
 import './Navbar.sass';
 
-export const Navbar = () => {
+export const Navbar = ({ currentUser, setModalIsOpen }) => {
+  const history = useHistory();
+
+  const [userAdmin, setUserAdmin] = useState(null);
+
+  useEffect(() => {
+    if (currentUser) {
+      firebase
+        .auth()
+        .currentUser.getIdTokenResult(true)
+        .then((claim) => {
+          setUserAdmin(claim.claims.type);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
+
   return (
     <header>
       <div className='container'>
@@ -14,14 +33,19 @@ export const Navbar = () => {
           </Link>
           <ul className='navbar'>
             <li className='navbar-item'>
-              <a className='navbar-link' href='/'>
-                Add Product
-              </a>
-            </li>
-            <li className='navbar-item'>
-              <a className='navbar-link' href='/'>
-                Dashboard
-              </a>
+              {(() => {
+                if (!currentUser || !userAdmin) {
+                  return <span></span>;
+                }
+                return (
+                  <span
+                    onClick={() => setModalIsOpen(true)}
+                    className='navbar-link'
+                  >
+                    Add Product
+                  </span>
+                );
+              })()}
             </li>
             <li className='navbar-item'>
               <Link className='navbar-link' to='/shop'>
@@ -29,14 +53,26 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className='navbar-item'>
-              <a className='navbar-link' href='/'>
+              <Link className='navbar-link' to='/contact'>
                 Contact
-              </a>
+              </Link>
             </li>
             <li className='navbar-item'>
-              <Link className='navbar-link' to='/sign-in'>
-                Sign In
-              </Link>
+              {currentUser ? (
+                <div
+                  className='option'
+                  onClick={() => {
+                    auth.signOut();
+                    history.push('/');
+                  }}
+                >
+                  Sign Out
+                </div>
+              ) : (
+                <Link className='navbar-link' to='/sign-in'>
+                  Sign In
+                </Link>
+              )}
             </li>
             <li className='navbar-item'>
               <a className='nav-link' href='/'>

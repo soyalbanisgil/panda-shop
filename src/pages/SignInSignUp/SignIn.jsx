@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { auth, SignInWithGoogle } from '../../firebase/firebase.utils';
+import { useHistory } from 'react-router-dom';
 import './SignIn.sass';
 
-export const SignIn = () => {
+export const SignIn = ({ currentUser }) => {
+  const history = useHistory();
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
 
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    } else {
+      history.push('/shop');
+    }
+  });
+
   const handleChange = (e) =>
     setUser({ ...user, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    const { email, password } = user;
+
     e.preventDefault();
-    console.log(user);
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setUser({
+        email: '',
+        password: '',
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -39,7 +60,10 @@ export const SignIn = () => {
             />
           </div>
           <button className='btn' type='submit'>
-            Enter
+            Sign In
+          </button>
+          <button onClick={SignInWithGoogle} className='btn'>
+            Sign In With Google
           </button>
         </form>
         <p>
@@ -50,7 +74,7 @@ export const SignIn = () => {
         className='image'
         style={{
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1484186694682-a940e4b1a9f7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80)',
+            'url(https://images.unsplash.com/photo-1483985988355-763728e1935b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)',
         }}
       ></div>
     </div>

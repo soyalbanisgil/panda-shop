@@ -1,9 +1,17 @@
 import React from 'react';
 import './MenuItem.sass';
+import { useHistory } from 'react-router-dom';
 
-export const MenuItem = ({ title, imageUrl, size }) => {
+export const MenuItem = ({ title, imageUrl, size, route }) => {
+  const history = useHistory();
+
   return (
-    <div className={`${size} menu-item`}>
+    <div
+      onClick={() =>
+        route ? history.push(`/category/${title}`) : history.push('/shop')
+      }
+      className={`${size} menu-item`}
+    >
       <div
         style={{
           backgroundImage: `url(${imageUrl})`,

@@ -1,18 +1,43 @@
 import React, { useState } from 'react';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 export const SignUp = () => {
   const [user, setUser] = useState({
-    name: '',
+    displayName: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
+
+  const { displayName, email, password, confirmPassword } = user;
 
   const handleChange = (e) =>
     setUser({ ...user, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
+    if (password !== confirmPassword) {
+      alert("Password Don't match");
+      return;
+    }
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      await createUserProfileDocument(user, { displayName });
+
+      setUser({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -21,18 +46,18 @@ export const SignUp = () => {
         className='image'
         style={{
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1484186694682-a940e4b1a9f7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80)',
+            'url(https://images.unsplash.com/photo-1483181957632-8bda974cbc91?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)',
         }}
       ></div>
       <div className='form'>
         <h1>Register and start shopping</h1>
         <form onSubmit={handleSubmit}>
           <div className='form-item'>
-            <span className='material-icons'>user</span>
+            <span className='material-icons'>person</span>
             <input
               onChange={handleChange}
               type='text'
-              name='name'
+              name='displayName'
               placeholder='Enter your name'
             />
           </div>
@@ -59,7 +84,7 @@ export const SignUp = () => {
             <input
               onChange={handleChange}
               type='password'
-              name='password2'
+              name='confirmPassword'
               placeholder='Confirm your password'
             />
           </div>
