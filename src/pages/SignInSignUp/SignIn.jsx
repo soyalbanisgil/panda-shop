@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { auth, SignInWithGoogle } from '../../firebase/firebase.utils';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './SignIn.sass';
 
-export const SignIn = ({ currentUser }) => {
+const SignIn = ({ currentUser }) => {
   const history = useHistory();
   const [user, setUser] = useState({
     email: '',
@@ -80,3 +81,9 @@ export const SignIn = ({ currentUser }) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(SignIn);

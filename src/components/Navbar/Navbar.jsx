@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import firebase, { auth } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';
 import Logo from '../../assets/logo.png';
 import './Navbar.sass';
+import CartIcon from '../Cart/CartIcon';
+import { CartDropdown } from '../CartDropdown/CartDropdown';
 
-export const Navbar = ({ currentUser, setModalIsOpen }) => {
+const Navbar = ({ currentUser, hidden, setModalIsOpen }) => {
   const history = useHistory();
 
   const [userAdmin, setUserAdmin] = useState(null);
@@ -75,13 +78,19 @@ export const Navbar = ({ currentUser, setModalIsOpen }) => {
               )}
             </li>
             <li className='navbar-item'>
-              <a className='nav-link' href='/'>
-                <span className='material-icons'>shopping_cart</span>
-              </a>
+              <CartIcon />
             </li>
           </ul>
         </nav>
+        {hidden ? null : <CartDropdown />}
       </div>
     </header>
   );
 };
+
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden,
+});
+
+export default connect(mapStateToProps)(Navbar);
