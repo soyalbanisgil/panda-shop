@@ -13,6 +13,7 @@ import Modal from 'react-modal';
 import { AddProductForm } from './components/AddProductForm/AddProductForm';
 import { Category } from './pages/Category/Category';
 import { setCurrentUser } from './redux/user/user.action';
+import Checkout from './pages/Checkout/Checkout';
 
 Modal.setAppElement('#root');
 
@@ -62,6 +63,7 @@ function App({ setCurrentUser }) {
         <Route path='/shop' component={ShopPage} />
         <Route path='/contact' component={Contact} />
         <Route path='/category/:category' component={Category} />
+        <Route exact path='/checkout' component={Checkout} />
       </Switch>
     </div>
   );
