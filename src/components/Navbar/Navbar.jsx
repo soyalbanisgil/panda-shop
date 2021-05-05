@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Logo from '../../assets/logo.png';
 import './Navbar.sass';
 import CartIcon from '../Cart/CartIcon';
-import { CartDropdown } from '../CartDropdown/CartDropdown';
+import CartDropdown from '../CartDropdown/CartDropdown';
 
 const Navbar = ({ currentUser, hidden, setModalIsOpen }) => {
   const history = useHistory();

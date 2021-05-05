@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addItem } from '../../redux/cart/cart.action';
 import './Item.sass';
 
-export const Item = ({ item }) => {
+const Item = ({ item, addItem }) => {
   return (
     <div className='product-item animate__animated animate__fadeIn'>
       <div
@@ -12,6 +14,15 @@ export const Item = ({ item }) => {
         <span className='name'>{item.name}</span>
         <span className='price'>${item.price}</span>
       </div>
+      <button onClick={() => addItem(item)} className='btn'>
+        Add To Cart
+      </button>
     </div>
   );
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  addItem: (item) => dispatch(addItem(item)),
+});
+
+export default connect(null, mapDispatchToProps)(Item);

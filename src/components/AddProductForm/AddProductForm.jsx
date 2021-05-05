@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { firestore } from '../../firebase/firebase.utils';
+// import { v4 as uuid4 } from 'uuid';
 import './AddProduct.sass';
 
 export const AddProductForm = ({ setModalIsOpen }) => {
@@ -8,6 +9,7 @@ export const AddProductForm = ({ setModalIsOpen }) => {
     imageUrl: '',
     category: '',
     price: 0,
+    id: '',
   });
 
   const handleChange = (e) =>
@@ -16,13 +18,14 @@ export const AddProductForm = ({ setModalIsOpen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     firestore.collection('products').add(productDetails);
-    alert('Produc Added');
     setModalIsOpen(false);
+    alert('Product Added');
     setProductDetails({
       name: '',
       imageUrl: '',
       category: '',
       price: 0,
+      id: '',
     });
   };
 
@@ -30,6 +33,16 @@ export const AddProductForm = ({ setModalIsOpen }) => {
     <form onSubmit={handleSubmit}>
       <h2>Add A Product</h2>
       <p>Fill the form to add a new product</p>
+      <div className='form-item'>
+        <span className='material-icons'>tag</span>
+        <input
+          type='text'
+          name='id'
+          onChange={handleChange}
+          required
+          placeholder='Id of the product'
+        />
+      </div>
       <div className='form-item'>
         <span className='material-icons'>inventory 2</span>
         <input
@@ -55,7 +68,7 @@ export const AddProductForm = ({ setModalIsOpen }) => {
           Category
         </label>
         <select name='category' onChange={handleChange} required>
-          <option value='hats'>Hats</option>
+          <option value='select'>Select Category</option>
           <option value='womens'>Women's</option>
           <option value='mens'>Men's</option>
           <option value='sneakers'>Sneakers</option>

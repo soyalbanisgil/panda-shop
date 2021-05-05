@@ -14,8 +14,6 @@ export const Category = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(items);
-
   const getItems = async () => {
     setLoading(true);
 

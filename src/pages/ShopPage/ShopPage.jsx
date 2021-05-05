@@ -8,7 +8,7 @@ export const ShopPage = () => {
     getItems();
   }, []);
 
-  const [items, setIems] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getItems = async () => {
@@ -20,12 +20,10 @@ export const ShopPage = () => {
         const data = doc.data();
         products.push(data);
       });
-      setIems(products);
+      setItems(products);
       setLoading(false);
     });
   };
-
-  console.log(loading);
 
   if (loading) {
     return <Spinner />;
