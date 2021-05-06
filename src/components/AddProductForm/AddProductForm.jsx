@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { firestore } from '../../firebase/firebase.utils';
-// import { v4 as uuid4 } from 'uuid';
+import { connect } from 'react-redux';
+import { addProduct } from '../../redux/products/products.action';
 import './AddProduct.sass';
 
-export const AddProductForm = ({ setModalIsOpen }) => {
-  const [productDetails, setProductDetails] = useState({
-    name: '',
-    imageUrl: '',
-    category: '',
-    price: 0,
-    id: '',
-  });
-
+const AddProductForm = ({ setModalIsOpen, productDetail, addProduct }) => {
   const handleChange = (e) =>
-    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+    addProduct({ ...productDetail, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    firestore.collection('products').add(productDetails);
+    firestore.collection('products').add(productDetail);
     setModalIsOpen(false);
     alert('Product Added');
-    setProductDetails({
+    addProduct({
       name: '',
       imageUrl: '',
       category: '',
@@ -90,3 +83,13 @@ export const AddProductForm = ({ setModalIsOpen }) => {
     </form>
   );
 };
+
+const mapStateToProps = (state) => ({
+  productDetail: state.products.productDetail,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addProduct: (product) => dispatch(addProduct(product)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProductForm);

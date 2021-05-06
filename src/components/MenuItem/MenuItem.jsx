@@ -8,7 +8,7 @@ export const MenuItem = ({ title, imageUrl, size, route }) => {
   return (
     <div
       onClick={() =>
-        route ? history.push(`/category/${title}`) : history.push('/shop')
+        route ? history.push(`/shop/${title}`) : history.push('/shop')
       }
       className={`${size} menu-item animate__animated animate__fadeInUp`}
     >

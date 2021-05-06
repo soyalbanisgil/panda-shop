@@ -5,13 +5,13 @@ import { Homepage } from './pages/Homepage/Homepage';
 import { Route, Switch } from 'react-router-dom';
 import SignIn from './pages/SignInSignUp/SignIn';
 import { SignUp } from './pages/SignInSignUp/SignUp';
-import { ShopPage } from './pages/ShopPage/ShopPage';
+import ShopPage from './pages/ShopPage/ShopPage';
 import { Contact } from './pages/Contact/Contact';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { AddProductForm } from './components/AddProductForm/AddProductForm';
-import { Category } from './pages/Category/Category';
+import AddProductForm from './components/AddProductForm/AddProductForm';
+import Category from './pages/Category/Category';
 import { setCurrentUser } from './redux/user/user.action';
 import Checkout from './pages/Checkout/Checkout';
 
@@ -60,9 +60,9 @@ function App({ setCurrentUser }) {
         <Route exact path='/' component={Homepage} />
         <Route exact path='/sign-in' component={SignIn} />
         <Route path='/sign-up' component={SignUp} />
-        <Route path='/shop' component={ShopPage} />
+        <Route exact path='/shop' component={ShopPage} />
         <Route path='/contact' component={Contact} />
-        <Route path='/category/:category' component={Category} />
+        <Route path='/shop/:category' component={Category} />
         <Route exact path='/checkout' component={Checkout} />
       </Switch>
     </div>

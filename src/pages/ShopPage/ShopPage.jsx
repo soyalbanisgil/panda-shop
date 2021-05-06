@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { ShopItems } from '../../components/ShopItems/ShopItems';
 import { Spinner } from '../../components/Spinner/Spinner';
+import { connect } from 'react-redux';
+import { getItems } from '../../redux/products/products.action';
 import { firestore } from '../../firebase/firebase.utils';
 
-export const ShopPage = () => {
+const ShopPage = ({ items, getItems }) => {
   useEffect(() => {
-    getItems();
+    getShopItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [items, setItems] = useState([]);
+  // const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getItems = async () => {
+  const getShopItems = async () => {
     setLoading(true);
 
     await firestore.collection('products').onSnapshot((snapshot) => {
@@ -20,7 +23,7 @@ export const ShopPage = () => {
         const data = doc.data();
         products.push(data);
       });
-      setItems(products);
+      getItems(products);
       setLoading(false);
     });
   };
@@ -36,3 +39,13 @@ export const ShopPage = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  items: state.products.items,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getItems: (items) => dispatch(getItems(items)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);

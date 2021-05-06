@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { ShopItems } from '../../components/ShopItems/ShopItems';
 import { useParams } from 'react-router-dom';
 import { firestore } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';
+import { getItems } from '../../redux/products/products.action';
 import { Spinner } from '../../components/Spinner/Spinner';
 
-export const Category = () => {
+const Category = ({ items, getItems }) => {
   const { category } = useParams();
-  const [items, setIems] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getItems();
+    getCategoryItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getItems = async () => {
+  const getCategoryItems = async () => {
     setLoading(true);
 
     await firestore.collection('products').onSnapshot((snapshot) => {
@@ -26,7 +27,7 @@ export const Category = () => {
           setLoading(false);
         }
       });
-      setIems(products);
+      getItems(products);
     });
   };
 
@@ -41,3 +42,13 @@ export const Category = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  items: state.products.items,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getItems: (items) => dispatch(getItems(items)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
