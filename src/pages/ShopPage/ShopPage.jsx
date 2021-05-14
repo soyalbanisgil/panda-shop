@@ -35,6 +35,7 @@ const ShopPage = ({ items, getItems }) => {
   return (
     <div className='container'>
       <h1 className='title'>All items</h1>
+      <p>In order to acces to the checkout page, please Sing In</p>
       <ShopItems items={items} />
     </div>
   );

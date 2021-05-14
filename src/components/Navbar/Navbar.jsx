@@ -46,8 +46,7 @@ const Navbar = ({ currentUser, hidden, setModalIsOpen }) => {
                 return (
                   <span
                     onClick={() => setModalIsOpen(true)}
-                    className='navbar-link'
-                  >
+                    className='navbar-link'>
                     Add Product
                   </span>
                 );
@@ -70,8 +69,7 @@ const Navbar = ({ currentUser, hidden, setModalIsOpen }) => {
                   onClick={() => {
                     auth.signOut();
                     history.push('/');
-                  }}
-                >
+                  }}>
                   Sign Out
                 </div>
               ) : (
@@ -80,9 +78,7 @@ const Navbar = ({ currentUser, hidden, setModalIsOpen }) => {
                 </Link>
               )}
             </li>
-            <li className='navbar-item'>
-              <CartIcon />
-            </li>
+            <li className='navbar-item'>{currentUser ? <CartIcon /> : null}</li>
           </ul>
         </nav>
         {hidden ? null : <CartDropdown />}
